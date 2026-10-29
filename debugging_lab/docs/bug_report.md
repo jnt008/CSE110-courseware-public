@@ -170,6 +170,48 @@ index.ts : On line 38, switch a.score and b.score
     reasoning for how you discovered where the bug was -->
 
 ### Confirming the fix
-I played the game again my leaderboard is sorted in descending order.
+I played the game again and my leaderboard is sorted in descending order.
+
+<!-- How did you confirm the problem is gone? -->
+
+
+---
+
+## Ticket 1: Stats always say "Stats unavailable"
+### Actual cause
+
+**File / function:**
+index.ts : app.post("/api/leaderboard"
+
+**What was wrong:**
+The "Top Scores" list looks like it's showing the worst scores instead of the best ones, and my score of 1 is listed as #1.
+
+### Fix
+
+index.ts : On line 38, switch a.score and b.score
+
+### How did you find it?
+
+#### Hypothesis testing
+
+**What hypothesis ultimately led you to identify the buggy code, and why?**
+
+#### Backward tracing
+
+<!-- Start from the symptom you saw and work backwards, one step at a time,
+     until you reach the buggy line. For each step, note where you looked
+     and what you saw there. Add steps as needed. -->
+
+1. **Symptom:** The leaderboard keeps displaying the worst scores at the top.
+2. **Traced back to:** I first looked at MenuScreenView.ts to see where the stats were being displayed.
+3. **Traced back to:** I looked in MenuScreenModel.ts, and saw how it was being displayed.
+4. **Traced back to:** I looked in MenuScreenController.ts because in the browser console log it said "Unable to load stats"
+5. **Traced back to:** I went to index.ts and saw that it was api/stats and not api/stat
+6. **Buggy code:** MenuScreenController.ts : on line 47, it is supposed to be fetch("/api/stats") and not fetch("/api/stat")
+<!-- It is okay to use your judgement here in limiting the number of traceback steps. We want to understand your 
+    reasoning for how you discovered where the bug was -->
+
+### Confirming the fix
+I played the game again and the stats are showing up at the bottom.
 
 <!-- How did you confirm the problem is gone? -->
