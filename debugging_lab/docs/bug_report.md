@@ -131,3 +131,45 @@ GameScreenView.ts : On line 85 and 86, delete Math.round()
 I played the game again and the lemon spawns in different locations.
 
 <!-- How did you confirm the problem is gone? -->
+
+
+---
+
+## Ticket 6: My high score disappeared from the leaderboard
+
+### Actual cause
+
+**File / function:**
+index.ts : app.post("/api/leaderboard"
+
+**What was wrong:**
+The "Top Scores" list looks like it's showing the worst scores instead of the best ones, and my score of 1 is listed as #1.
+
+### Fix
+
+index.ts : On line 38, switch a.score and b.score
+
+### How did you find it?
+
+#### Hypothesis testing
+
+**What hypothesis ultimately led you to identify the buggy code, and why?**
+
+#### Backward tracing
+
+<!-- Start from the symptom you saw and work backwards, one step at a time,
+     until you reach the buggy line. For each step, note where you looked
+     and what you saw there. Add steps as needed. -->
+
+1. **Symptom:** The leaderboard keeps displaying the worst scores at the top.
+2. **Traced back to:** The error would be somewhere where the scores get ordered.
+3. **Traced back to:** I found the code for the order in index.ts
+4. **Buggy code:** index.ts: on line 38, the scores are supposed to be sorted in descending order, but doing a.score - b.score makes it sorted in ascending order.
+
+<!-- It is okay to use your judgement here in limiting the number of traceback steps. We want to understand your 
+    reasoning for how you discovered where the bug was -->
+
+### Confirming the fix
+I played the game again my leaderboard is sorted in descending order.
+
+<!-- How did you confirm the problem is gone? -->
