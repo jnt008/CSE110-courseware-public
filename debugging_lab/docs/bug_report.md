@@ -7,7 +7,7 @@ Copy the template below once for each ticket you solved.
 
 ---
 
-## Ticket <5>: <Leaderboard dates show "undefined">
+## Ticket 5: Leaderboard dates show "undefined"
 
 ### Actual cause
 
@@ -20,7 +20,7 @@ The leaderboard never shows when a score was set. I just finished a game with 18
 
 ### Fix
 
-<!-- What did you change, and why does that change fix the problem? -->
+ResultsScreenView.ts : on line 106, entry.timestamp should be entry.time, because index.ts uses time to create the entries. Since the other functions use "timestamp", JavaScript tries to access it, but that property doesn't exist in the object returned by the server.
 
 ### How did you find it?
 
