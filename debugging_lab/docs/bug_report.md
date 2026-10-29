@@ -46,3 +46,46 @@ ResultsScreenView.ts : on line 106, entry.timestamp should be entry.time, becaus
 I played the game again and saw the timestamps.
 
 <!-- How did you confirm the problem is gone? -->
+
+
+---
+
+## Ticket 4: Stuck on the Game Over screen
+
+### Actual cause
+
+**File / function:**
+GameScreenController.ts : endGame()
+
+**What was wrong:**
+When a game ends, the game-over sound keeps replaying every second and the leaderboard fills up with copies of my score. I can't get out of the results screen: Play Again shows the menu for a moment and then jumps right back to "GAME OVER!".
+
+### Fix
+
+GameScreenController.ts : on line 87, there is a call to this.stopTimer;. Add a set of parentheses at the end: this.stopTimer();
+
+### How did you find it?
+
+#### Hypothesis testing
+
+**What hypothesis ultimately led you to identify the buggy code, and why?**
+
+#### Backward tracing
+
+<!-- Start from the symptom you saw and work backwards, one step at a time,
+     until you reach the buggy line. For each step, note where you looked
+     and what you saw there. Add steps as needed. -->
+
+1. **Symptom:** I can't get out of the results screen: Play Again shows the menu for a moment and then jumps right back to "GAME OVER!".
+2. **Traced back to:** The error would be somewhere in the function that calls game over.
+3. **Traced back to:** I found the endGame() function in GameScreenController.
+4. **Buggy code:** GameScreenController.ts : on line 87, there is a call to this.stopTimer;. This is wrong because without the parentheses there is no call to the function. Add a set of parentheses at the end: this.stopTimer(); 
+
+<!-- It is okay to use your judgement here in limiting the number of traceback steps. We want to understand your 
+    reasoning for how you discovered where the bug was -->
+
+### Confirming the fix
+I played the game again and the Game Over screen didn't keep updating, and I was able to successfully click the Play Again button.
+
+<!-- How did you confirm the problem is gone? -->
+
