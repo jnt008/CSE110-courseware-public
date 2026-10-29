@@ -89,3 +89,45 @@ I played the game again and the Game Over screen didn't keep updating, and I was
 
 <!-- How did you confirm the problem is gone? -->
 
+
+
+---
+
+## Ticket 3: Stuck on the Game Over screen
+
+### Actual cause
+
+**File / function:**
+GameScreenView.ts : randomizeLemonPosition()
+
+**What was wrong:**
+The lemon isn't really random. After I click it, it keeps jumping between the same four spots near the corners, and sometimes it doesn't seem to move at all. Once you notice, you can just wait in a corner for it to show up.
+
+### Fix
+
+GameScreenView.ts : On line 85 and 86, delete Math.round()
+
+### How did you find it?
+
+#### Hypothesis testing
+
+**What hypothesis ultimately led you to identify the buggy code, and why?**
+
+#### Backward tracing
+
+<!-- Start from the symptom you saw and work backwards, one step at a time,
+     until you reach the buggy line. For each step, note where you looked
+     and what you saw there. Add steps as needed. -->
+
+1. **Symptom:** After I click the lemon, it keeps jumping between the same four spots near the corners
+2. **Traced back to:** The error would be somewhere in the function displays the lemon.
+3. **Traced back to:** I found the randomizeLemonPosition() function in the file GameScreenView.ts
+4. **Buggy code:** GameScreenView.ts : on line 85 and 86, the randomize function uses Math.round around the function Math.random(). This makes it so the random number generated would always be rounded to either 0 or 1. Because of this, on the x and y axis there will only be two options for the lemon to show up each.
+
+<!-- It is okay to use your judgement here in limiting the number of traceback steps. We want to understand your 
+    reasoning for how you discovered where the bug was -->
+
+### Confirming the fix
+I played the game again and the lemon spawns in different locations.
+
+<!-- How did you confirm the problem is gone? -->
