@@ -1,22 +1,22 @@
 # Lemon Clicker Bug Report
 
 **Name:**
-**Tickets solved:** <!-- e.g. 1, 2, 3, 5, 6 (at least five) -->
+**Tickets solved:** 5
 
 Copy the template below once for each ticket you solved. 
 
 ---
 
-## Ticket <number>: <ticket title>
+## Ticket <5>: <Leaderboard dates show "undefined">
 
 ### Actual cause
 
-<!-- Which file and function was the bug in, and what was wrong with the code?
-     Explain why that code produced the behavior described in the ticket. -->
-
 **File / function:**
+ResultsScreenView.ts : export type LeaderboardEntry
+ResultsScreenModel.ts : updateLeaderboard
 
 **What was wrong:**
+The leaderboard never shows when a score was set. I just finished a game with 18 points and the "Top Scores" list says 1. 18 - undefined. The score itself is right, but where the date should be it just says "undefined". 
 
 ### Fix
 
@@ -34,14 +34,15 @@ Copy the template below once for each ticket you solved.
      until you reach the buggy line. For each step, note where you looked
      and what you saw there. Add steps as needed. -->
 
-1. **Symptom:** <!-- what you saw, e.g. text on screen, console error -->
-2. **Traced back to:** <!-- where that came from, e.g. a function, a request in the Network tab, a server log -->
-3. **Traced back to:**
-4. **Buggy code:** <!-- the file, function and line where the trace ended -->
+1. **Symptom:** I saw that the timestamp was "undefined" even though the score was present on the leaderboard
+2. **Traced back to:** The error would be in ResultsScreenView
+3. **Traced back to:** The variables don't match up with the one used in index.ts
+4. **Buggy code:** ResultsScreenView.ts : on line 106, entry.timestamp should be entry.time, because index.ts uses time to create the entries. Since the other functions use "timestamp", JavaScript tries to access it, but that property doesn't exist in the object returned by the server.
 
 <!-- It is okay to use your judgement here in limiting the number of traceback steps. We want to understand your 
     reasoning for how you discovered where the bug was -->
 
 ### Confirming the fix
+I played the game again and saw the timestamps.
 
 <!-- How did you confirm the problem is gone? -->
